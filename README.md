@@ -1,5 +1,5 @@
-Detecting Anomalies in Smart Buildings using Machine Learning
-# **Designs for data collection:**
+# Detecting Anomalies in Smart Buildings using Machine Learning
+## **Designs for data collection:**
 Python scripts were created to automate data collection and processing. These scripts use python's built-in json module to extract data from json files and the request module to collect json files from the Urban Observatory REST API. In this way, the REST services were queried with the script for a summary for all rooms in the observatory. Next, the summary JSON file was used to gather the room entity IDs. At this point, it was important to choose more frequently used rooms to detect an abnormality in a sensor data. With the occupancy sensor, this frequency of use can be determined. For this reason, services were queried for more detailed information using the room entity IDs obtained, and the return results were filtered according to the rooms with occupancy sensors. Occupancy information was requested to find the top 5 rooms with the highest traffic in a selected month (2019-08). 
 Using this information, all sensor occupancy information was collected for 4 rooms, sensor IDs and metric measured by the sensor were stored, and 3 rooms were selected according to the number of similar measurements in these rooms. Then, depending on the API's response, the rest service was queried for timeseries data for rooms using sensor IDs that collect data every two years, monthly or daily. Finally, the timeseries json files collected were merged into CSV files in the format of Figure 1.
 
@@ -14,10 +14,10 @@ The combined CVS files were then read into the python pipelines for the models, 
 Actual Cooling Set point, Actual Heating Set point, Chilled Water Valve, CO2, Cooling Set Point, Cooling Valve Position, Heating Set Point, Heating Valve Position, HVAC Operating Mode, Light Power Level, Low Temperature Hot Water Valve, Mode, Mode Input, Occupancy Sensor, Relative Humidity, Room Brightness, Room Occupied, Room Temperature, BrightnessValueZ2, Fan Speed.
 
 The rooms used for the project were: 2.008, G.069, 6.031.
-# **Selected models:**
+## **Selected models:**
 - K-means
 - Isolation Forest:
-# **Pre-processing data:**
+## **Pre-processing data:**
 **K-means:**
 
 The features used in k-means were time and value, no other factor was considered in the training and the testing of the models, because the classifier is based on cluster formation these features made the most sense. Metric and duration were the key features that were not taken into consideration directly in the data set used. Two new columns were created in the data, P1 and P2, P1 being Value and P2 being time. Time represents time of day and did not include the date the data was taken on, such that all data points fit with in a 24-hour window. Because of this all values were scaled together using the standard scalar. 
@@ -53,7 +53,7 @@ The image above shows how reactive the rolling mean is to the variance of values
 The image up shows how the rolling window measured at each 1h fits to the variance of values for 3 given days. See appendix H for other rolling window graphs.
 
 
-# **Hyper parameter training:**
+## **Hyper parameter training:**
 **K-means:**
 
 To do the Hyper-parameter training a loop was used for k-means, because all the hyper-parameters are numeric. The loop can be used to run through a range of values and after each iteration the score function can be used to find the most optimum value for that given hyper-parameter. After the loop has been completed a graph is produced, called an elbow curve, that displays the results. 
@@ -82,7 +82,7 @@ All 3 datasets were labelled with predicted anomalies using a biased Isolation f
  | :-: |
 
 
-# **Results after Training the algorithms:**
+## **Results after Training the algorithms:**
 **K-means:**
 
 K-means inherently does not have the capabilities to detect anomalies, and so a function was defined. The function first finds the distance of all datapoints relative to their respective cluster centroids. This the length of the list is then multiplied by the outlier fraction, which is determined by the programmer, to find how many outliers there may be in the data. Using this value an array of the largest distance values is found. The threshold value is the minimum of this array. Finally, if the distance from the data points centroid is greater than or equal to the threshold value than it is considered an anomaly.
@@ -125,8 +125,8 @@ Figure 5 shows the results after running the algorithm on the dataset of room 2.
 Figure 6 illustrates the CO2 data set of room 2.008 over a two-month period. The red dots in the figure show the above detected outliers are respective to time and value. 
 
 
-# **The design of experiments:**
-## Evaluation:
+## **The design of experiments:**
+### Evaluation:
 **Design:** 
 
 The destine of the evaluation experiment was to compare the detection capabilities of both algorithms. This is especially hard because the data itself does not have a validation column, and so visualisations of the data will be used to compare the two algorithms.
@@ -184,11 +184,11 @@ Table 3
 
 Table 2 and 3 show the upper and lower bounds of both types of classifiers for room 2.008 in September the 11th at 1pm. All the other results can be seen in appendix G.
 
-**Evaluation:**
+## **Evaluation:**
 
 Isolation forest works on a Rolling Mean, some results do not have an upper or lower bound as all results will return an anomaly, such is the case of room brightness on September 11th 1pm. After running these tests, Isolation forest produces a smaller allowance of deviation from the mean value before considering a datapoint anomalous. This is supported by the combined graphs in appendix D. Additionally the injection attack for Isolation forest also seems to predict much faster than k-means, and there for would be better in a situation of finding anomalies in a stream of data. 
 
-# **Future improvements:** 
+## **Future improvements:** 
 The first improvement would-be real-world testing by Incorporating the trained models into a program that can be ran while real data is being streamed from the sensors. We determined a time range and compared the algorithm results over the sensor data in this range. This time interval can be diversified, and algorithms can be tried over more rooms. According to the results, hyperparameters can be made even more efficient. Because of trying to detect anomaly with unsupervised algorithms, we cannot know whether the sensor data labelled as anomalous is anomalous. At this point, comparing the results of algorithms applied to sensor data in other time intervals can provide us with an idea of the accuracy of the data labelled as anomalous. Again, the results can be observed by plotting results on graphs which helps in evaluating the models but having confirmed anomalous data would help in determining the accuracy of them. Testing the algorithm on sensor data for more than 2 months may provide more realistic results.
 
 
