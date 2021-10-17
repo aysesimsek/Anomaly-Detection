@@ -42,15 +42,16 @@ Rolling windows(means) needed to be calculated to ensure the stability of our mo
 
  |![image](https://user-images.githubusercontent.com/37701256/137637248-dad1dc18-76dc-4cd3-b7aa-d2c33078d982.png)|
  | :-: |
+ Figure 3
 
-
-The image above shows how reactive the rolling mean is to the variance of values when calculated at 1-hour, 6-hour and 12-hour intervals. 
+ Figure 3. shows how reactive the rolling mean is to the variance of values when calculated at 1-hour, 6-hour and 12-hour intervals. 
 
 
  |![image](https://user-images.githubusercontent.com/37701256/137637251-19a9d50d-f175-43b1-b504-1aa865a54ae6.png)|
  | :-: |
-
-The image up shows how the rolling window measured at each 1h fits to the variance of values for 3 given days. See appendix H for other rolling window graphs.
+ Figure 4
+ 
+ Figure 4. shows how the rolling window measured at each 1h fits to the variance of values for 3 given days. See appendix H for other rolling window graphs.
 
 
 ## **Hyper parameter training:**
@@ -62,7 +63,7 @@ To do the Hyper-parameter training a loop was used for k-means, because all the 
 
  |![image](https://user-images.githubusercontent.com/37701256/137637258-ae2ec6ab-47b3-4b8d-9223-a744d0c4f118.png)|
  | :-: |
-
+ Figure 5
 
 The results for the hyper parameter training were:
 
@@ -80,7 +81,7 @@ All 3 datasets were labelled with predicted anomalies using a biased Isolation f
 
  |![image](https://user-images.githubusercontent.com/37701256/137637262-b78a6e43-d5ec-46cf-b2dc-06baf86b4f7a.png)|
  | :-: |
-
+ Figure 6
 
 ## **Results after Training the algorithms:**
 **K-means:**
@@ -90,17 +91,17 @@ K-means inherently does not have the capabilities to detect anomalies, and so a 
 
  |![image](https://user-images.githubusercontent.com/37701256/137637267-28b9c39c-97da-49be-b109-3572bb039130.png)|
  | :-: |
- Figure 3
+ Figure 7
 
-Figure 3 is the test data from room 2.008, these are the results after running the anomaly function on the dataset after it has been grouped, figure 2. The red dots represent anomalies. Other rooms data is in appendix A.
+Figure 7 is the test data from room 2.008, these are the results after running the anomaly function on the dataset after it has been grouped, figure 2. The red dots represent anomalies. Other rooms data is in appendix A.
 
 
 
  |![image](https://user-images.githubusercontent.com/37701256/137637275-eb451f42-6326-4a2c-b160-cc54154ad15a.png)|
  | :-: |
- Figure 4
+ Figure 8
 
-Figure 4 shows CO2 data for room 2.008 represented over the 2-month period, against the value. The red X’s show where the above anomalies detected in figure 3 are respective to time and value.
+Figure 8 shows CO2 data for room 2.008 represented over the 2-month period, against the value. The red X’s show where the above anomalies detected in figure 3 are respective to time and value.
 
 The other sensors result like in figure 4 can be found in appendix C, this also includes Isolation forests data.
 
@@ -112,17 +113,17 @@ Isolation Forest is a very good algorithm for detecting anomalies, what the algo
 
  |![image](https://user-images.githubusercontent.com/37701256/137637285-e968c7c7-e8d1-473c-bae5-dc5afd37c869.png)|
  | :-: |
- Figure 5
+ Figure 9
 
-Figure 5 shows the results after running the algorithm on the dataset of room 2.008 against DateTime, Duration and Value. The red dots in the figure represent anomalies it detects. 
+Figure 9 shows the results after running the algorithm on the dataset of room 2.008 against DateTime, Duration and Value. The red dots in the figure represent anomalies it detects. 
 
 
 
  |![image](https://user-images.githubusercontent.com/37701256/137637290-123800f3-5830-45c9-92cc-29d9a3fa0709.png)|
  | :-: |
- Figure 6
+ Figure 10
 
-Figure 6 illustrates the CO2 data set of room 2.008 over a two-month period. The red dots in the figure show the above detected outliers are respective to time and value. 
+Figure 10 illustrates the CO2 data set of room 2.008 over a two-month period. The red dots in the figure show the above detected outliers are respective to time and value. 
 
 
 ## **The design of experiments:**
@@ -146,9 +147,9 @@ Table 1 lumps all 3 datasets into one and divides the data points into 1 of 4 ca
 
  |![image](https://user-images.githubusercontent.com/37701256/137637295-91938e93-b78b-4f20-bc15-cb3572381398.png)|
  | :-: |
- Figure 7
+ Figure 11
 
-Figure 7 shows data from Room 2.008 for CO2 with both the models predicted anomalies, the red x represents K-means anomalies and the yellow X Isolation forests. 
+Figure 11 shows data from Room 2.008 for CO2 with both the models predicted anomalies, the red x represents K-means anomalies and the yellow X Isolation forests. 
 
 **Evaluation:**
 
@@ -165,22 +166,22 @@ To do this a subset of the data is taken from the hour on the given day on that 
 **Results:**
 
 Table 2
-|<p>**K-means**</p><p>**September 11th 1pm**</p><p>**For room 2.008**</p>|<p>**Anomalous values**</p><p></p><p>**Upper        Lower**</p>|<p>**Deviation from the mean (anomalous value - mean)**</p><p>**Upper                 lower**</p>|
-| :- | :- | :- |
+|**K-Means September 11th 1pm For room 2.008**|**Upper (Anomalous Values)**|**Lower (Anomalous Values)**|**Upper (Deviation from the mean)**|**Lower (Deviation from the mean)**|
+| :- | :- | :- |:- |:- |
 |Room Temperature|25|17|+3|-4|
 |CO2|577|299|+105|-173|
 |Room Brightness|1136|-236|+747|-623|
 |Relative humidity|71|18|+21|-31|
 
 
+
 Table 3
-|<p>**Isolation forest**</p><p>**September 11th 1pm**</p><p>**For room 2.008**</p>|<p>**Anomalous values**</p><p></p><p>**Upper             Lower**</p>|<p>**Deviation from the mean (anomalous value - mean)**</p><p>**Upper                      lower**</p>|
-| :- | :- | :- |
-|Room Temperature|23|` `18|+2|-3|
+|**Isolation forest September 11th 1pm For room 2.008**|**Upper (Anomalous Values)**|**Lower (Anomalous Values)**|**Upper (Deviation from the mean)**|**Lower (Deviation from the mean)**|
+| :- | :- | :- |:- |:- |
+|Room Temperature|23|18|+2|-3|
 |CO2|534|<p>383</p><p></p>|<p>+62</p><p></p>|-89|
 |Room Brightness|462|462|N/A|N/A|
 |Relative humidity|60|33|+11|-16|
-
 
 Table 2 and 3 show the upper and lower bounds of both types of classifiers for room 2.008 in September the 11th at 1pm. All the other results can be seen in appendix G.
 
